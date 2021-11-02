@@ -1,0 +1,71 @@
+<!--Seccion donde se toman los datos del nuevo cliente para registrar-->
+<section>
+	
+	<br>
+	<h1>{{title}}</h1>
+
+	<div class="alert alert-success" *ngIf="success == 1 && type== 'new'" role="alert">
+		<!-- Se ha registrado un nuevo cliente exitosamente.<a [routerLink]="['/clients/details/', newId]" class="alert-link">Haga click aqui</a> para ver los detalles. -->
+		Se ha registrado un nuevo cliente exitosamente.
+	</div>
+
+	<div class="alert alert-success" *ngIf="success == 1 && type== 'edit'" role="alert">
+		<!-- Se ha registrado un nuevo cliente exitosamente.<a [routerLink]="['/clients/details/', newId]" class="alert-link">Haga click aqui</a> para ver los detalles. -->
+		Se ha modificado un cliente exitosamente.
+	</div>
+
+	<form #newClient="ngForm" (ngSubmit)="onSubmit()">
+
+		<div class="form-group">
+			<label for="nombre">Nombre</label>
+			<input type="text" class="form-control" placeholder="Nombre" name="nombre" #nombre="ngModel" [(ngModel)]="client.nombre" required>
+			<div *ngIf="nombre.touched && !client.nombre" class="alert alert-danger" role="alert">
+				El nombre es requerido
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="domicilio">Domicilio</label>
+			<input type="text" class="form-control" name="domicilio" placeholder="Domicilio" #domicilio="ngModel" [(ngModel)]="client.domicilio">
+		</div>
+		
+		<div class="form-group">
+			<label for="numero_documento">Numero Documento</label>
+			<input type="text" class="form-control" name="numero_documento" placeholder="Numero Documento" #numero_documento="ngModel"
+			[(ngModel)]="client.numero_documento" required>
+			<div *ngIf="numero_documento.touched && !client.numero_documento" class="alert alert-danger" role="alert">
+				La identificacion es requerida
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="text" class="form-control" name="email" placeholder="Email" #email="ngModel"
+			[(ngModel)]="client.email">
+			<!-- <div *ngIf="email.touched && !cliente.email" class="alert alert-danger" role="alert">
+				El email es requerido
+			</div> -->
+		</div>
+
+		<div class="div">
+			
+		</div>
+		
+		<!-- <div class="form-check">
+			<input class="form-check-input" type="radio" name="companyFalse"  value="false"  checked #companyFalse="ngModel" [(ngModel)]="client.company">
+			<label class="form-check-label" for="companyTrue">
+			Persona natural
+			</label>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="companyTrue" value="true" checked #companyFalse="ngModel" [(ngModel)]="client.company">
+			<label class="form-check-label" for="companyTrue">
+			Compañia
+			</label>
+		</div> -->
+		<br>
+
+		 <button type="submit" class="btn btn-primary" [disabled]="!newClient.form.valid">Guardar</button>
+	</form>
+
+</section>

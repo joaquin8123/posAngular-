@@ -1,0 +1,69 @@
+<!--Seccion de detalles de los productos-->
+<br>
+<section class="jumbotron" *ngIf="success">
+	<!--Seccion que retorna un mensaje de exito o de error-->
+	<div>
+		<div class="alert alert-success" *ngIf="exito == 1" role="alert">
+			Se ha editado el producto exitosamente
+		</div>
+
+		<div class="alert alert-danger" *ngIf="exito == -1" role="alert">
+				No se ha podido editar el producto, intentelo de nuevo
+		</div>
+	</div>
+
+	<h1>{{title}} {{product.marca}} - {{product.nombre}}</h1>
+	<hr>
+
+	<ul>
+		<li> Nombre: {{product.nombre}}</li>
+		<li> Marca: {{product.marca}}</li>
+		<li> Descripcion: {{product.descripcion}}</li>
+		<li *ngIf="!edit"> Precio: {{product.precio_unitario}}</li>
+		<li> Categoria: {{product.categoria}}</li>
+		<li *ngIf="!edit"> Cantidad disponible: {{product.cantidad}} </li>
+	</ul>
+
+	<hr>
+
+	<!--Botones de editar y deshabilitar-->
+	<div *ngIf="!edit && enable">
+		<button type="button" class="btn btn-warning" [routerLink]="['/inventory/edit/', product.id]">Editar</button>
+		<button type="button" class="btn btn-danger" (click)="disableProduct()">Deshabilitar</button>
+	</div>
+
+
+	<!--Seccion de botones en caso de que-->
+	<button *ngIf="!edit && !enable" type="button" class="btn btn-warning" (click)="enableProduct()">Habilitar producto</button>
+
+
+	<!--Seccion donde se edita el precio y la cantidad de los productos en caso de que estes editando-->
+	<div *ngIf="edit">
+
+		<form #newProduct="ngForm" (ngSubmit)="updateProduct()">
+			<div class="form-group">
+				<label for="cantidad">Cantidad</label>
+				<input type="number" class="form-control" name="cantidad" placeholder="Cantidad" #cantidad="ngModel" [(ngModel)]="product.cantidad" required>
+				<div *ngIf="cantidad.touched && !product.cantidad" class="alert alert-danger" role="alert">
+					La cantidad es requerida
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="precio_unitario">Precio</label>
+				<input type="number" class="form-control" name="precio_unitario" placeholder="Precio" #precio_unitario="ngModel" [(ngModel)]="product.precio_unitario" required>
+				<div *ngIf="precio_unitario.touched && !product.precio_unitario" class="alert alert-danger" role="alert">
+					El precio es requerido
+				</div>
+			</div>
+
+			<br>
+			<button type="submit" class="btn btn-warning" [disabled]="!newProduct.form.valid">Guardar</button>
+		</form>
+	</div>
+
+	<!--Seccion donde se muestra el conjunto de registros de compras relacionado con este producto-->
+	<!-- <hr>
+	<app-get-registry [arrayRegistry]="this.product.registryId"></app-get-registry> -->
+
+</section>

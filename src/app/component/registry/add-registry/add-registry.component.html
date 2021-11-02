@@ -1,0 +1,129 @@
+<!--Seccion de compras-->
+
+<section>
+	<br>
+	<h1>Registrar Venta</h1>
+	<hr>
+
+	<!--Seccion para buscar el cliente-->
+	<div>
+		<br>
+		<div class="row">
+			<div class="form-group col-6" >
+				<label for="nombre">Cliente</label>
+				<select  [(ngModel)]="selectedClient" (change)="clientSelected($event)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+					<option selected >Seleccione un Cliente</option>
+					<option [ngValue]="cliente" *ngFor="let cliente of clients">{{cliente.nombre}} </option>
+				</select>
+				<!-- <input type="text" class="form-control" name="nombre" placeholder="Nombre" #nombre="ngModel"
+				[(ngModel)]="product.nombre" required>
+				<div *ngIf="nombre.touched && !product.nombre" class="alert alert-danger" role="alert">
+					El nombre es requerido
+				</div> -->
+			</div>
+			<div class="form-group col-6">
+				<label for="fecha" >Fecha</label>
+				<input type="date" class="form-control" name="fecha" placeholder="Fecha" #fecha="ngModel"[(ngModel)]="comprobante.fecha" required>
+				<!-- <div *ngIf="nombre.touched && !product.nombre" class="alert alert-danger" role="alert">
+					El nombre es requerido
+				</div> -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-6" >
+				<label for="domicilio">Domicilio</label>
+				<input type="text" class="form-control" name="cliente_nombre"  #comprobante.cliente.domicilio="ngModel"
+				[(ngModel)]="comprobante.cliente.domicilio">
+				<!--
+				<div *ngIf="nombre.touched && !product.nombre" class="alert alert-danger" role="alert">
+					El nombre es requerido
+				</div> -->
+			</div>
+			<div class="form-group col-6">
+				<label for="pos_fiscal">Condicion Venta</label>
+				<input type="text" class="form-control" name="cliente_nombre" placeholder="Nombre" #comprobante.cliente.nombre="ngModel"
+				[(ngModel)]="comprobante.cliente.nombre" required>
+				<!-- <div *ngIf="nombre.touched && !product.nombre" class="alert alert-danger" role="alert">
+					El nombre es requerido
+				</div> -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-6" >
+				<label for="tipo_entrega">Tipo Entrega</label>
+				<!-- <input type="text" class="form-control" name="nombre" placeholder="Nombre" #nombre="ngModel"
+				[(ngModel)]="product.nombre" required>
+				<div *ngIf="nombre.touched && !product.nombre" class="alert alert-danger" role="alert">
+					El nombre es requerido
+				</div> -->
+			</div>
+			<div class="form-group col-6">
+				<label for="metodo_venta">Metodo Venta</label>
+				<!-- <input type="text" class="form-control" name="nombre" placeholder="Nombre" #nombre="ngModel"
+				[(ngModel)]="product.nombre" required>
+				<div *ngIf="nombre.touched && !product.nombre" class="alert alert-danger" role="alert">
+					El nombre es requerido
+				</div> -->
+			</div>
+		</div>
+		<br>
+	</div>
+	<hr>
+	<div>
+	<!--Seccion para mostrar los productos seleccionados-->
+		<div>
+			<br>
+			<h2>Detalle</h2>
+
+			<table  class="table table-hover">
+				<thead>
+					<!--Cabecera de tabla-->
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Unidad Venta</th>
+						<th scope="col">Cantidad</th>
+						<th scope="col">Precio</th>
+						<th scope="col">Descuento</th>
+						<th scope="col">Subtotal</th>
+					</tr>
+				</thead>
+
+
+					<!--Cuerpo de la tabla      *ngIf="peticion_succeful"-->
+				<tbody > 
+					<tr *ngFor="let productoSeleccionado of productosSeleccionados; let indice = index">
+						<th scope="row">{{indice}}</th>
+						<td>{{productoSeleccionado.nombre}}</td>
+						<td>{{productoSeleccionado.unidad_venta}}</td>
+						<td>{{productoSeleccionado.cantidad}}</td>
+						<td>{{productoSeleccionado.precio_unitario}}</td>
+						<td>{{productoSeleccionado.descuento}}</td>
+						<td>{{(productoSeleccionado.cantidad * productoSeleccionado.precio_unitario)}}</td>
+						<button *ngIf="productoSeleccionado.nombre" type="button" class="btn btn-warning btn-list" (click)="removeProduct(indice)">Remover</button>
+					</tr>
+					<tr>
+						<th scope="row"></th>
+						<td><select  [(ngModel)]="selectedProduct" (change)="productSelected($event)">
+							<option selected >Seleccione un Producto</option>
+							<option [ngValue]="producto" *ngFor="let producto of productos">{{producto.nombre}} </option>
+						</select></td>
+						<td><input type="text" #lineaComprobante.unidad_venta="ngModel" [(ngModel)]="comprobante.producto.unidad_venta"></td>
+						<td><input type="text" #lineaComprobante.producto.cantidad="ngModel" [(ngModel)]="comprobante.producto.cantidad"></td>
+						<td><input type="text" #lineaComprobante.producto.precio_unitario="ngModel" [(ngModel)]="comprobante.producto.precio_unitario"></td>
+						<td><input type="text" #lineaComprobante.producto.descuento="ngModel" [(ngModel)]="comprobante.producto.descuento"></td>
+						<td>{{lineaComprobante.cantidad * lineaComprobante.precio_unitario}}</td>
+						<button type="button" class="btn btn-secondary" (click)="addProduct(lineaComprobante)">Agregar Linea</button>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			<h2>Precio total: ${{registry.total_price}}</h2>
+		</div>
+	</div>
+
+	<br>
+	<button class="btn btn-primary" [disabled]="this.success_client != 2 || this.products[0].name == ''" (click)="addRegistry()">Realizar Venta</button>
+
+</section>
+
